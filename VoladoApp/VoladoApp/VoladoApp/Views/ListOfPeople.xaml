@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:volado="clr-namespace:VoladoApp.Styles"
+             xmlns:viewModel="clr-namespace:VoladoApp.ViewModels" 
+             xmlns:lottie="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
+             mc:Ignorable="d"
+             x:Class="VoladoApp.Views.ListOfPeople">
+    
+    
+    <ContentPage.BindingContext>
+        <viewModel:ListOfPeopleViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <FontImageSource x:Key="ButtonSent"
+                         FontFamily="{StaticResource FontAwesome}"
+                         Glyph="{x:Static volado:IconFont.PaperPlane}"
+                         Size="34"
+                         Color="Black"/>
+
+        <FontImageSource x:Key="ButtonSentDisabled"
+                         FontFamily="{StaticResource FontAwesome}"
+                         Glyph="{x:Static volado:IconFont.PaperPlane}"
+                         Size="34"
+                         Color="#8e8e8e"/>
+
+        <FontImageSource x:Key="CloseButton"
+                         FontFamily="{StaticResource FontAwesome}"
+                         Glyph="{x:Static volado:IconFont.WindowClose}"
+                         Size="20"
+                         Color="Black"/>
+
+        <FontImageSource x:Key="Start"
+                         FontFamily="{StaticResource FontAwesome}"
+                         Glyph="{x:Static volado:IconFont.HourglassStart}"
+                         Size="24"
+                         Color="White"/>
+
+        <DataTemplate x:Key="People">
+            <StackLayout Orientation="Horizontal">
+                <Grid Padding="10">
+                    <Frame 
+                    Margin="5,0,20,0"
+                    Padding="5"
+                    HorizontalOptions="Start"
+                    BackgroundColor="#CCCCCC"
+                    CornerRadius="20"
+                    HasShadow="False">
+                        <Label Margin="10,5"
+                           Text="{Binding NickName}" />
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_1"/>
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_1"/>
+                    </Grid.GestureRecognizers>
+                </Grid>
+                <ImageButton HorizontalOptions="EndAndExpand"
+                             Source="{StaticResource CloseButton}"
+                             BackgroundColor="Transparent"
+                             Margin="0,10,20,10"
+                             Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.EliminatePeople}"
+                             CommandParameter="{Binding .}"
+                             Clicked="ImageButton_Clicked"/>
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_1"/>
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+        </DataTemplate>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="{StaticResource Start}" Command="{Binding StartCommand}"/>
+        <ToolbarItem Text="Ver Resultados" Command="{Binding SeeResultsCommand}" Order="Secondary"/>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="4*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <CollectionView x:Name="collectionView"
+                            ItemsSource="{Binding NewPeople}"
+                            ItemTemplate="{StaticResource People}"
+                            HorizontalOptions="Start"
+                            BackgroundColor="Transparent"
+                            IsVisible="{Binding IsVisible}">
+                <CollectionView.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_1"/>
+                </CollectionView.GestureRecognizers>
+            </CollectionView>
+
+            <lottie:AnimationView x:Name="lottie" 
+                                  Animation="629-empty-box.json"
+                                  AutoPlay="true"
+                                  Loop="true" 
+                                  Margin="10"
+                                  IsVisible="{Binding LottieVisible}"/>
+
+            <StackLayout Grid.Row="1">
+                <Frame x:Name="ImageFrame" BackgroundColor="#CCCCCC"
+                   HorizontalOptions="Center"
+                   Margin="10"
+                   CornerRadius="40"
+                   HasShadow="True"
+                   BorderColor="Transparent"
+                   WidthRequest="50"
+                       HeightRequest="50">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                    </Frame.GestureRecognizers>
+
+                    <Grid>
+                        <ImageButton x:Name="firstImage" HorizontalOptions="Center"
+                                     Padding="0"
+                         BackgroundColor="Transparent"
+                         Clicked="firstImage_Clicked"
+                         Source="{StaticResource ButtonSent}">
+                        </ImageButton>
+
+                        <Grid x:Name="sendData">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Entry x:Name="myEntry" Grid.Column="0"
+                               BackgroundColor="Transparent"
+                               Placeholder="Message"
+                               Text="{Binding Name, Mode=TwoWay}"
+                               TextChanged="Entry_TextChanged"
+                                   MaxLength="15"/>
+                            <ImageButton Grid.Column="1"
+                                         x:Name="sendButton"
+                                         HorizontalOptions="Center"
+                                         VerticalOptions="Center"
+                                         BackgroundColor="Transparent"
+                                         Command="{Binding SendPeopleCommand}"
+                                         Source="{StaticResource ButtonSent}"
+                                         Clicked="sendButton_Clicked">
+                                <ImageButton.Triggers>
+                                    <Trigger TargetType="ImageButton" Property="IsEnabled" Value="False">
+                                        <Setter Property="Source" Value="{StaticResource ButtonSentDisabled}" />
+                                    </Trigger>
+                                </ImageButton.Triggers>
+                            </ImageButton>
+                        </Grid>
+                    </Grid>
+                </Frame>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:controls="clr-namespace:VoladoApp.Views.Pruebas" xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" xmlns:lottie="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
+             mc:Ignorable="d"
+             x:Class="VoladoApp.Views.Pruebas.Login"
+             Title="Login"
+             Shell.NavBarIsVisible="False"
+             Shell.TitleColor="White">
+    <ContentPage.Resources>
+        <Style x:Key="CenteredTextTitle"
+               TargetType="Label">
+            <Setter Property="Margin"
+                    Value="24,12" />
+            <Setter Property="HorizontalOptions"
+                    Value="Center" />
+            <Setter Property="VerticalOptions"
+                    Value="Center" />
+        </Style>
+        <Style TargetType="Entry">
+            <Setter Property="BackgroundColor"
+                    Value="Transparent" />
+            <Setter Property="TextColor" Value="White"/>
+        </Style>
+        <Style TargetType="controls:Card"
+               x:Key="FormStyle">
+            <Setter Property="BackgroundColor" Value="Green"/>
+            <Setter Property="Margin"
+                    Value="12,0" />
+            <Setter Property="CornerRadius"
+                    Value="16" />
+            <Setter Property="Elevation"
+                    Value="10" />
+            <Setter Property="Visual"
+                    Value="Material" />
+            <Setter Property="Padding"
+                    Value="10,8" />
+        </Style>
+    </ContentPage.Resources>
+    <Grid>
+        <yummy:PancakeView BackgroundGradientStartColor="#38e0da"
+                           BackgroundGradientEndColor="#21b4e2"
+                           BackgroundGradientAngle="0"
+                           IsClippedToBounds="true" HorizontalOptions="FillAndExpand" >
+
+            <ScrollView>
+                <Grid x:Name="Root"
+                  Margin="0,12"
+                  RowSpacing="12">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <!-- Header -->
+                    <lottie:AnimationView Animation="10152-login-animation.json"
+                                      AutoPlay="true"
+                                      HeightRequest="120"
+                                      Loop="true" />
+
+                    <!-- Form Selector -->
+                    <Grid Margin="40,0"
+                      ColumnSpacing="0"
+                      Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <controls:Card BackgroundColor="#20000000"
+                                   Grid.ColumnSpan="2"
+                                   InputTransparent="True"
+                                   x:Name="SelectorBackground"
+                                   CornerRadius="40"
+                                   Elevation="10" />
+                        <Grid>
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="SelectorOption_Tapped" />
+                            </Grid.GestureRecognizers>
+                            <Label Text="Existing"
+                                   InputTransparent="True"
+                                   TextColor="White"
+                                   Style="{StaticResource CenteredTextTitle}" />
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="SelectorOption_Tapped" />
+                            </Grid.GestureRecognizers>
+                            <Label Text="New"
+                                   InputTransparent="True"
+                                   TextColor="White"
+                                   Style="{StaticResource CenteredTextTitle}" />
+                        </Grid>
+                        <controls:Card x:Name="SelectorButton"
+                                   CornerRadius="40"
+                                   Elevation="10"
+                                   BackgroundColor="White"
+                                   Margin="6">
+                            <Label Text="Existing"
+                                   TextColor="Black"
+                               x:Name="SelectorButtonLabel"
+                               Style="{StaticResource CenteredTextTitle}" />
+                        </controls:Card>
+                    </Grid>
+
+                    <!-- Login Form -->
+                    <Frame Grid.Row="2"
+                           Margin="20"
+                           CornerRadius="20"
+                           BackgroundColor="White"
+                           x:Name="LoginForm"
+                           IsVisible="True">
+                        <StackLayout Spacing="12" VerticalOptions="Center">
+                            <Entry Placeholder="Email" TextColor="Black"/>
+                            <Entry Placeholder="Password" TextColor="Black"
+                               IsPassword="true" />
+                        </StackLayout>
+                    </Frame>
+                    <!-- Signup Form -->
+                    <Frame BackgroundColor="White"
+                           Grid.Row="2"
+                           IsVisible="False"
+                           Opacity="0"
+                           x:Name="SignupForm"
+                           Margin="20"
+                           CornerRadius="20">
+                        <StackLayout Spacing="12" VerticalOptions="Center">
+                            <Entry Placeholder="Username" TextColor="Black"/>
+                            <Entry Placeholder="Email" TextColor="Black"/>
+                            <Entry Placeholder="Password" TextColor="Black"
+                                   IsPassword="True"/>
+                            <Entry Placeholder="Confirm password" TextColor="Black"
+                                   IsPassword="True"/>
+                        </StackLayout>
+                    </Frame>
+
+                    <Button Text="Submit" Grid.Row="3" 
+                        WidthRequest="200" HorizontalOptions="Center"
+                        CornerRadius="20"
+                            BackgroundColor="Black"
+                            TextColor="White"
+                            x:Name="submit"/>
+
+                </Grid>
+            </ScrollView>
+        </yummy:PancakeView>
+    </Grid>
+</ContentPage>

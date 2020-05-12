@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Page:PopupPage  xmlns:Page="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+                 xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                 xmlns:lottie="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
+                 mc:Ignorable="d"
+                 x:Class="VoladoApp.Views.WinnerPage"
+                 BackgroundColor="#BC000000">
+    <!--<Grid>-->
+        <Frame HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Margin="20"
+                   CornerRadius="20">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                    <Label Text="El ganador es: " 
+                           HorizontalOptions="Center"
+                           FontSize="Large"
+                           Grid.Row="0"/>
+                    <Label x:Name="winner"
+                           HorizontalOptions="Center"
+                           FontAttributes="Bold"
+                           FontSize="40"
+                           Margin="10"
+                           Grid.Row="1"/>
+
+                <lottie:AnimationView Animation="3846-trophy-shake.json"
+                                      AutoPlay="True"
+                                      Loop="True" 
+                                      Grid.Row="2"
+                                      WidthRequest="250"
+                                      HeightRequest="250"/>
+            </Grid>
+        </Frame>
+    <!--</Grid>-->
+</Page:PopupPage>

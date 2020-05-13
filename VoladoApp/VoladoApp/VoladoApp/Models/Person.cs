@@ -7,7 +7,6 @@ namespace VoladoApp.Models
 {
     public class Person
     {
-        [MaxLength(15)]
         public string NickName { get; set; }
     }
 }

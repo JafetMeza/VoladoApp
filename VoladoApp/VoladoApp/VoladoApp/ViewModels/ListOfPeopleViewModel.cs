@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
@@ -87,6 +88,21 @@ namespace VoladoApp.ViewModels
                 var index = random.Next(NewPeople.Count);
                 var winner = NewPeople[index];
                 Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new WinnerPage(winner));
+
+                //GUARDAR DATOS EN BASE DE DATOS
+                var allPeople = new List<Person>();
+                foreach (var item in NewPeople)
+                {
+                    allPeople.Add(item);
+                }
+
+                var serializeData = JsonConvert.SerializeObject(allPeople);
+
+                App.Database.SaveItemAsync(new Results
+                {
+                    Winner = winner.NickName,
+                    AllPeople = serializeData
+                }); 
             }
         }
 
@@ -96,6 +112,8 @@ namespace VoladoApp.ViewModels
         {
             //READ DATA BASE TO WATCH ALL THE RESULTS
             //BOTON PARA BORRAR TODO
+
+            Application.Current.MainPage.Navigation.PushModalAsync(new NavigationPage(new WatchAllResultsPage()));
         }
     }
 }

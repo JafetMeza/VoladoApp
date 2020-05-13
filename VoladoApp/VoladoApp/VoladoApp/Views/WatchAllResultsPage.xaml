@@ -2,14 +2,91 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:viewModel="clr-namespace:VoladoApp.ViewModels"
+             xmlns:volado="clr-namespace:VoladoApp.Styles"
              mc:Ignorable="d"
-             x:Class="VoladoApp.Views.WatchAllResultsPage">
+             x:Class="VoladoApp.Views.WatchAllResultsPage"
+             BackgroundColor="#CCCCCC">
+    <ContentPage.BindingContext>
+        <viewModel:WatchAllResultsViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <FontImageSource x:Key="flecha"
+                         FontFamily="{StaticResource FontAwesome}"
+                         Glyph="{x:Static volado:IconFont.ArrowDown}"
+                         Size="20"
+                         Color="Gray"/>
+
+        <DataTemplate x:Key="result">
+            <Frame CornerRadius="20"
+                           BackgroundColor="White">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="1"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Text="Ganador:"
+                                       VerticalOptions="Center"
+                                       FontSize="Medium"/>
+                        <Label Text="{Binding Winner}"
+                                       Grid.Column="1"
+                                       FontSize="Title"
+                                       FontAttributes="Bold"
+                                       VerticalOptions="Center"/>
+                    </Grid>
+
+                    <BoxView BackgroundColor="Red" HeightRequest="1"
+                                     Grid.Row="1"/>
+
+                    <StackLayout Grid.Row="2">
+                        <StackLayout Orientation="Horizontal" 
+                                             Margin="0,10"
+                                             HorizontalOptions="EndAndExpand">
+                            <Label Text="Ver Personas "
+                                           FontSize="Medium"
+                                           VerticalOptions="Center"/>
+                            <ImageButton Source="{StaticResource flecha}"
+                                                 BackgroundColor="Transparent"
+                                                 VerticalOptions="Center"/>
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={x:Reference collectionView}, 
+                                                                Path=BindingContext.WatchAllPeopleCommand}}}"/>
+                            </StackLayout.GestureRecognizers>
+                        </StackLayout>
+
+                        <CollectionView x:Name="allPeople" ItemsSource="{Binding AllPeople}"
+                                                IsVisible="{Binding IsVisible}">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackLayout>
+                                        <Label Text="{Binding NickName}" 
+                                                   HorizontalOptions="EndAndExpand"/>
+                                    </StackLayout>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </StackLayout>
+                </Grid>
+            </Frame>
+        </DataTemplate>
+    </ContentPage.Resources>
+    
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <CollectionView x:Name="collectionView" 
+                        ItemsSource="{Binding AllResults}"
+                        ItemTemplate="{StaticResource result}"
+                        HorizontalOptions="Start"
+                        BackgroundColor="Transparent" Margin="20"/>
+
     </ContentPage.Content>
 </ContentPage>

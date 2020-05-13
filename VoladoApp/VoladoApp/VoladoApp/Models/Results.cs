@@ -10,8 +10,7 @@ namespace VoladoApp.Models
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
 
-        public Person Winner { get; set; }
-
-        public People AllPeople { get; set; }
+        public string Winner { get; set; }
+        public string AllPeople { get; set; }
     }
 }

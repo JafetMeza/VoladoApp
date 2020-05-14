@@ -82,7 +82,7 @@ namespace VoladoApp.ViewModels
         private void OnStartCommand()
         {
             //SELECT A RANDOM ITEM IN THE LIST
-            if(NewPeople.Count > 0)
+            if(NewPeople.Count > 1)
             {
                 var random = new Random();
                 var index = random.Next(NewPeople.Count);
@@ -104,6 +104,10 @@ namespace VoladoApp.ViewModels
                     AllPeople = serializeData
                 }); 
             }
+            else
+            {
+                Application.Current.MainPage.DisplayAlert("Datos Insuficientes", "Debes de colocar mas de una persona para la seleccion al azar.", "OK");
+            }
         }
 
         public ICommand SeeResultsCommand => new Command(() => OnSeeResultsCommand());
@@ -113,7 +117,17 @@ namespace VoladoApp.ViewModels
             //READ DATA BASE TO WATCH ALL THE RESULTS
             //BOTON PARA BORRAR TODO
 
-            Application.Current.MainPage.Navigation.PushModalAsync(new NavigationPage(new WatchAllResultsPage()));
+            Application.Current.MainPage.Navigation.PushAsync(new WatchAllResultsPage() { Title = "Resultados"});
         }
+
+        public ICommand CleanListCommand => new Command(() =>
+        {
+            if (NewPeople.Count > 0)
+            {
+                NewPeople.Clear();
+                IsVisible = false;
+                MessagingCenter.Send(this, "lottie", false);
+            }
+        });
     }
 }

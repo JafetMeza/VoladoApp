@@ -9,5 +9,7 @@ namespace VoladoApp.Models
     {
         public string Winner { get; set; }
         public ObservableCollection<Person> AllPeople { get; set; }
+        public int Height { get; set; }
+        public Results Result { get; set; }
     }
 }

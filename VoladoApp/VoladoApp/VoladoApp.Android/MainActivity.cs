@@ -27,6 +27,7 @@ namespace VoladoApp.Droid
             Rg.Plugins.Popup.Popup.Init(this, savedInstanceState);
             Lottie.Forms.Droid.AnimationViewRenderer.Init();
 
+            Window.SetStatusBarColor(Android.Graphics.Color.Argb(255,209,0,0));
             LoadApplication(new App());
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)

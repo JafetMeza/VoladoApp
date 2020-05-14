@@ -4,89 +4,140 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:viewModel="clr-namespace:VoladoApp.ViewModels"
-             xmlns:volado="clr-namespace:VoladoApp.Styles"
+             xmlns:volado="clr-namespace:VoladoApp.Styles" 
+             xmlns:lottie="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
              mc:Ignorable="d"
              x:Class="VoladoApp.Views.WatchAllResultsPage"
-             BackgroundColor="#CCCCCC">
+             BackgroundColor="#e3e3e3">
     <ContentPage.BindingContext>
         <viewModel:WatchAllResultsViewModel/>
     </ContentPage.BindingContext>
 
     <ContentPage.Resources>
-        <FontImageSource x:Key="flecha"
+        <FontImageSource x:Key="downArrow"
                          FontFamily="{StaticResource FontAwesome}"
                          Glyph="{x:Static volado:IconFont.ArrowDown}"
                          Size="20"
                          Color="Gray"/>
 
+        <FontImageSource x:Key="upArrow"
+                         FontFamily="{StaticResource FontAwesome}"
+                         Glyph="{x:Static volado:IconFont.ArrowUp}"
+                         Size="20"
+                         Color="Gray"/>
+
+        <FontImageSource x:Key="close"
+                         FontFamily="{StaticResource FontAwesome}"
+                         Glyph="{x:Static volado:IconFont.WindowClose}"
+                         Size="20"
+                         Color="Red"/>
+
         <DataTemplate x:Key="result">
-            <Frame CornerRadius="20"
-                           BackgroundColor="White">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="1"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-
+            <ContentView>
+                <Frame CornerRadius="20"
+                       BackgroundColor="White"
+                       Margin="0,5" HasShadow="True"
+                       IsClippedToBounds="True">
                     <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="2*"/>
-                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="1"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
 
-                        <Label Text="Ganador:"
+                        <ImageButton Source="{StaticResource close}"
+                                     HorizontalOptions="EndAndExpand"
+                                     VerticalOptions="Center"
+                                     Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.DeleteCommand}"
+                                     CommandParameter="{Binding .}"/>
+
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Text="Ganador:"
                                        VerticalOptions="Center"
                                        FontSize="Medium"/>
-                        <Label Text="{Binding Winner}"
+                            <Label Text="{Binding Winner}"
                                        Grid.Column="1"
                                        FontSize="Title"
                                        FontAttributes="Bold"
                                        VerticalOptions="Center"/>
-                    </Grid>
+                        </Grid>
 
-                    <BoxView BackgroundColor="Red" HeightRequest="1"
-                                     Grid.Row="1"/>
+                        <BoxView BackgroundColor="Red" HeightRequest="1"
+                                     Grid.Row="2"/>
 
-                    <StackLayout Grid.Row="2">
-                        <StackLayout Orientation="Horizontal" 
-                                             Margin="0,10"
-                                             HorizontalOptions="EndAndExpand">
-                            <Label Text="Ver Personas "
-                                           FontSize="Medium"
-                                           VerticalOptions="Center"/>
-                            <ImageButton Source="{StaticResource flecha}"
-                                                 BackgroundColor="Transparent"
-                                                 VerticalOptions="Center"/>
-                            <StackLayout.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding Source={x:Reference collectionView}, 
-                                                                Path=BindingContext.WatchAllPeopleCommand}}}"/>
-                            </StackLayout.GestureRecognizers>
-                        </StackLayout>
+                        <Expander Grid.Row="3">
+                            <Expander.Header>
+                                <StackLayout Orientation="Horizontal" 
+                                     Margin="0,10">
+                                    <Label Text="Ver Personas "
+                                   FontSize="Medium"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="EndAndExpand"/>
+                                    <Image Source="{StaticResource downArrow}"
+                                         BackgroundColor="Transparent"
+                                         VerticalOptions="Center"
+                                         HorizontalOptions="End">
+                                        <Image.Triggers>
+                                            <DataTrigger TargetType="Image"
+                                                     Binding="{Binding Source={RelativeSource AncestorType={x:Type Expander}}, Path=IsExpanded}"
+                                                     Value="True">
+                                                <Setter Property="Source" Value="{StaticResource upArrow}"/>
+                                            </DataTrigger>
+                                        </Image.Triggers>
+                                    </Image>
+                                </StackLayout>
+                            </Expander.Header>
 
-                        <CollectionView x:Name="allPeople" ItemsSource="{Binding AllPeople}"
-                                                IsVisible="{Binding IsVisible}">
-                            <CollectionView.ItemTemplate>
+                            <Expander.ContentTemplate>
                                 <DataTemplate>
-                                    <StackLayout>
-                                        <Label Text="{Binding NickName}" 
-                                                   HorizontalOptions="EndAndExpand"/>
-                                    </StackLayout>
+                                    <CollectionView ItemsSource="{Binding AllPeople}"
+                                                HeightRequest="{Binding Height}">
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Frame Margin="0" Padding="15">
+                                                    <Label Text="{Binding NickName}" 
+                                                           HorizontalOptions="EndAndExpand"/>
+                                                </Frame>
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
                                 </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
-                    </StackLayout>
-                </Grid>
-            </Frame>
+                            </Expander.ContentTemplate>
+
+                        </Expander>
+                    </Grid>
+                </Frame>
+            </ContentView>
         </DataTemplate>
     </ContentPage.Resources>
-    
-    <ContentPage.Content>
-        <CollectionView x:Name="collectionView" 
-                        ItemsSource="{Binding AllResults}"
-                        ItemTemplate="{StaticResource result}"
-                        HorizontalOptions="Start"
-                        BackgroundColor="Transparent" Margin="20"/>
 
+    <ContentPage.Content>
+        <Grid>
+            <CollectionView x:Name="collectionView" 
+                            ItemsSource="{Binding AllResults}"
+                            ItemTemplate="{StaticResource result}"
+                            HorizontalOptions="Start"
+                            BackgroundColor="Transparent" Margin="20"
+                            IsVisible="{Binding IsVisible}"/>
+
+            <lottie:AnimationView Animation="10223-search-empty.json"
+                                  AutoPlay="True"
+                                  Loop="True" 
+                                  VerticalOptions="Start"
+                                  Margin="5,20"
+                                  IsVisible="{Binding LottieVisible}"/>
+            <Label Text="Ups! Parece que no hay ningun resultado."
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   TextColor="Black"
+                   FontSize="Medium"
+                   IsVisible="{Binding LottieVisible}"/>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -12,13 +13,6 @@ namespace VoladoApp.ViewModels
 {
     public class WatchAllResultsViewModel : BaseViewModel
     {
-        public enum Position
-        {
-            Show,
-            Hide
-        }
-        private Position position { get; set; }
-
         private ObservableCollection<ResultsFromDataBase> allResults;
         public ObservableCollection<ResultsFromDataBase> AllResults
         {
@@ -33,41 +27,53 @@ namespace VoladoApp.ViewModels
             set => SetProperty(ref isVisible, value);
         }
 
+        private bool lottieVisible = false;
+        public bool LottieVisible
+        {
+            get => lottieVisible;
+            set => SetProperty(ref lottieVisible, value);
+        }
+
         public WatchAllResultsViewModel()
         {
             AllResults = new ObservableCollection<ResultsFromDataBase>();
-            position = Position.Hide;
-            IsVisible = false;
         }
 
         public async Task GetResults()
         {
+            AllResults.Clear();
+
             var results = await App.Database.GetItemsAsync();
             foreach (var item in results)
             {
                 var data = JsonConvert.DeserializeObject<List<Person>>(item.AllPeople);
                 var list = new ObservableCollection<Person>();
+
                 foreach (var person in data)
                 {
                     list.Add(person);
                 }
-                AllResults.Add(new ResultsFromDataBase { Winner = item.Winner, AllPeople = list });
+                AllResults.Add(new ResultsFromDataBase { Winner = item.Winner, AllPeople = list , Height = (list.Count * 40) + (list.Count * 10), Result = item});
+            }
+
+            if(AllResults.Count > 0)
+            {
+                IsVisible = true;
+                LottieVisible = false;
+            }
+            else
+            {
+                IsVisible = false;
+                LottieVisible = true;
             }
         }
 
-        public ICommand WatchAllPeopleCommand => new Command(() =>
+        public ICommand DeleteCommand => new Command(async (item) =>
         {
-            //ARREGLAR ESTA COSA
-            switch (position)
-            {
-                case Position.Hide:
-                    IsVisible = false;
-                    break;
+            var data = (ResultsFromDataBase)item;
 
-                case Position.Show:
-                    IsVisible = true;
-                    break;
-            }
+            await App.Database.DeleteItemAsync(data.Result);
+            await GetResults();
         });
     }
 }

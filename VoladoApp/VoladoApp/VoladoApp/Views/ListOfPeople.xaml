@@ -35,7 +35,7 @@
 
         <FontImageSource x:Key="Start"
                          FontFamily="{StaticResource FontAwesome}"
-                         Glyph="{x:Static volado:IconFont.HourglassStart}"
+                         Glyph="{x:Static volado:IconFont.PlayCircle}"
                          Size="24"
                          Color="White"/>
 
@@ -76,6 +76,7 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem IconImageSource="{StaticResource Start}" Command="{Binding StartCommand}"/>
         <ToolbarItem Text="Ver Resultados" Command="{Binding SeeResultsCommand}" Order="Secondary"/>
+        <ToolbarItem Text="Limpiar lista" Command="{Binding CleanListCommand}" Order="Secondary"/>
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>

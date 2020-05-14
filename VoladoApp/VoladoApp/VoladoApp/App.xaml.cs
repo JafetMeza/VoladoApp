@@ -13,7 +13,9 @@ namespace VoladoApp
         {
             InitializeComponent();
 
-            MainPage = new AppShell();
+            Device.SetFlags(new[] {"Expander_Experimental"});
+
+            MainPage = new NavigationPage(new ListOfPeople());
         }
 
         static ItemDatabase database;

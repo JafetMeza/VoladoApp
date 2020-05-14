@@ -68,6 +68,10 @@
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <BundleResource Include="Resources\629-empty-box.json" />
+    <BundleResource Include="Resources\3846-trophy-shake.json" />
+    <BundleResource Include="Resources\10152-login-animation.json" />
+    <BundleResource Include="Resources\10223-search-empty.json" />
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">

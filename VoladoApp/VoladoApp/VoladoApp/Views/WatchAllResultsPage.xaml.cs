@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using VoladoApp.Services;
 using VoladoApp.ViewModels;
+using VoladoApp.Views.Pruebas;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -21,9 +22,8 @@ namespace VoladoApp.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-
             var vm = BindingContext as WatchAllResultsViewModel;
-            vm.GetResults().SafeFireAndForget(false);
+            vm.GetResults().FireAndForget();
         }
     }
 }

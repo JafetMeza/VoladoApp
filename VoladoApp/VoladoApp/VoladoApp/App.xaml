@@ -16,6 +16,10 @@
                 x:TypeArguments="x:String"
                 Android="FabMDL2.ttf#Fabric MDL2 Assets"
                 iOS="Fabric MDL2 Assets" />
+            
+            <Style TargetType="NavigationPage" >
+                <Setter Property="BarBackgroundColor" Value="Red"/>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

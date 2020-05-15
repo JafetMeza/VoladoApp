@@ -17,6 +17,30 @@ namespace VoladoApp.Views
         public WatchAllResultsPage()
         {
             InitializeComponent();
+            MessagingCenter.Subscribe<WatchAllResultsViewModel, bool>(this, "lottie", (sender, args) =>
+            {
+                if (args)
+                {
+                    lottieGrid.IsVisible = true;
+                    lottie.Loop = true;
+                    lottie.Play();
+                    collectionView.IsVisible = false;
+                    icon.IsVisible = false;
+                }
+                else
+                {
+                    lottieGrid.IsVisible = false;
+                    collectionView.IsVisible = true;
+                    icon.IsVisible = false;
+                }
+            });
+
+            MessagingCenter.Subscribe<WatchAllResultsViewModel>(this, "icon", (sender) =>
+            {
+                icon.IsVisible = true;
+                lottie.IsVisible = false;
+                collectionView.IsVisible = false;
+            });
         }
 
         protected override void OnAppearing()

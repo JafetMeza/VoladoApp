@@ -3,11 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:lottie="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
              xmlns:viewModel="clr-namespace:VoladoApp.ViewModels"
              xmlns:volado="clr-namespace:VoladoApp.Styles" 
-             xmlns:lottie="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
              mc:Ignorable="d"
              x:Class="VoladoApp.Views.WatchAllResultsPage"
+             Shell.BackgroundColor="Red"
+             Shell.ForegroundColor="White"
              BackgroundColor="#e3e3e3">
     <ContentPage.BindingContext>
         <viewModel:WatchAllResultsViewModel/>
@@ -31,6 +33,11 @@
                          Glyph="{x:Static volado:IconFont.WindowClose}"
                          Size="20"
                          Color="Red"/>
+        <FontImageSource x:Key="sad"
+                         FontFamily="{StaticResource FontAwesome}"
+                         Glyph="{x:Static volado:IconFont.Frown}"
+                         Size="220"
+                         Color="DarkBlue"/>
 
         <DataTemplate x:Key="result">
             <ContentView>
@@ -123,21 +130,26 @@
                             ItemsSource="{Binding AllResults}"
                             ItemTemplate="{StaticResource result}"
                             HorizontalOptions="Start"
-                            BackgroundColor="Transparent" Margin="20"
-                            IsVisible="{Binding IsVisible}"/>
+                            BackgroundColor="Transparent" Margin="20"/>
 
-            <lottie:AnimationView Animation="10223-search-empty.json"
-                                  AutoPlay="True"
-                                  Loop="True" 
-                                  VerticalOptions="Start"
-                                  Margin="5,20"
-                                  IsVisible="{Binding LottieVisible}"/>
-            <Label Text="Ups! Parece que no hay ningun resultado."
+            <Grid x:Name="lottieGrid">
+                <Grid>
+                    <Image x:Name="icon" 
+                           Source="{StaticResource sad}"
+                           VerticalOptions="Start"
+                           Margin="5,60"/>
+                    <lottie:AnimationView Animation="10223-search-empty.json"
+                                      AutoPlay="True" x:Name="lottie"
+                                      Loop="True" 
+                                      VerticalOptions="Start"
+                                      Margin="5,20"/>
+                </Grid>
+                <Label Text="Ups! Parece que no hay ningun resultado."
                    HorizontalOptions="Center"
                    VerticalOptions="Center"
                    TextColor="Black"
-                   FontSize="Medium"
-                   IsVisible="{Binding LottieVisible}"/>
+                   FontSize="Medium"/>
+            </Grid>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

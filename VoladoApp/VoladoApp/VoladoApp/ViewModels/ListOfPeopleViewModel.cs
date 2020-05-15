@@ -110,15 +110,10 @@ namespace VoladoApp.ViewModels
             }
         }
 
-        public ICommand SeeResultsCommand => new Command(() => OnSeeResultsCommand());
-
-        private void OnSeeResultsCommand()
+        public ICommand SeeResultsCommand => new Command(async () =>
         {
-            //READ DATA BASE TO WATCH ALL THE RESULTS
-            //BOTON PARA BORRAR TODO
-
-            Application.Current.MainPage.Navigation.PushAsync(new WatchAllResultsPage() { Title = "Resultados"});
-        }
+            await Shell.Current.GoToAsync("watchResults");
+        });
 
         public ICommand CleanListCommand => new Command(() =>
         {

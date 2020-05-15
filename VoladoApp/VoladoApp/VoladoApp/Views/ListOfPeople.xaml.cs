@@ -67,7 +67,7 @@ namespace VoladoApp.Views
             }
         }
 
-        private async void HideEntry()
+        private async Task HideEntry()
         {
             if (touched)
             {
@@ -92,7 +92,7 @@ namespace VoladoApp.Views
             }
         }
 
-        private async void ExpandEntry()
+        private async Task ExpandEntry()
         {
             if (!touched)
             {
@@ -120,32 +120,28 @@ namespace VoladoApp.Views
         {
             if (!touched)
             {
-                ExpandEntry();
+                await ExpandEntry();
             }
         }
 
         private async void firstImage_Clicked(object sender, EventArgs e)
         {
-            ExpandEntry();
+            await ExpandEntry();
         }
 
         private async void TapGestureRecognizer_Tapped_1(object sender, EventArgs e)
         {
-            HideEntry();
+            await HideEntry();
         }
 
         private async void sendButton_Clicked(object sender, EventArgs e)
         {
-            HideEntry();
-            if(onlyFirstTime)
-            {
-                
-            }
+            await HideEntry();
         }
 
-        private void ImageButton_Clicked(object sender, EventArgs e)
+        private async void ImageButton_Clicked(object sender, EventArgs e)
         {
-            HideEntry();
+            await HideEntry();
         }
     }
 }

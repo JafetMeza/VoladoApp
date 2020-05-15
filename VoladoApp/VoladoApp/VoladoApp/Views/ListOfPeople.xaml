@@ -7,7 +7,10 @@
              xmlns:viewModel="clr-namespace:VoladoApp.ViewModels" 
              xmlns:lottie="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
              mc:Ignorable="d"
-             x:Class="VoladoApp.Views.ListOfPeople">
+             x:Class="VoladoApp.Views.ListOfPeople"
+             Shell.BackgroundColor="Red"
+             Shell.ForegroundColor="White"
+             Title="Go Random!">
     
     
     <ContentPage.BindingContext>
@@ -74,38 +77,38 @@
     </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="{StaticResource Start}" Command="{Binding StartCommand}"/>
+        <ToolbarItem IconImageSource="{StaticResource Start}" Command="{Binding StartCommand}" Order="Primary"/>
         <ToolbarItem Text="Ver Resultados" Command="{Binding SeeResultsCommand}" Order="Secondary"/>
         <ToolbarItem Text="Limpiar lista" Command="{Binding CleanListCommand}" Order="Secondary"/>
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
         <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="4*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="4*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-            <CollectionView x:Name="collectionView"
+                <CollectionView x:Name="collectionView"
                             ItemsSource="{Binding NewPeople}"
                             ItemTemplate="{StaticResource People}"
                             HorizontalOptions="Start"
                             BackgroundColor="Transparent"
                             IsVisible="{Binding IsVisible}">
-                <CollectionView.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_1"/>
-                </CollectionView.GestureRecognizers>
-            </CollectionView>
+                    <CollectionView.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_1"/>
+                    </CollectionView.GestureRecognizers>
+                </CollectionView>
 
-            <lottie:AnimationView x:Name="lottie" 
+                <lottie:AnimationView x:Name="lottie" 
                                   Animation="629-empty-box.json"
                                   AutoPlay="true"
                                   Loop="true" 
                                   Margin="10"
                                   IsVisible="{Binding LottieVisible}"/>
 
-            <StackLayout Grid.Row="1">
-                <Frame x:Name="ImageFrame" BackgroundColor="#CCCCCC"
+                <StackLayout Grid.Row="1">
+                    <Frame x:Name="ImageFrame" BackgroundColor="#CCCCCC"
                    HorizontalOptions="Center"
                    Margin="10"
                    CornerRadius="40"
@@ -113,30 +116,30 @@
                    BorderColor="Transparent"
                    WidthRequest="50"
                        HeightRequest="50">
-                    <Frame.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
-                    </Frame.GestureRecognizers>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                        </Frame.GestureRecognizers>
 
-                    <Grid>
-                        <ImageButton x:Name="firstImage" HorizontalOptions="Center"
+                        <Grid>
+                            <ImageButton x:Name="firstImage" HorizontalOptions="Center"
                                      Padding="0"
                          BackgroundColor="Transparent"
                          Clicked="firstImage_Clicked"
                          Source="{StaticResource ButtonSent}">
-                        </ImageButton>
+                            </ImageButton>
 
-                        <Grid x:Name="sendData">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="3*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Entry x:Name="myEntry" Grid.Column="0"
+                            <Grid x:Name="sendData">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="3*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Entry x:Name="myEntry" Grid.Column="0"
                                BackgroundColor="Transparent"
                                Placeholder="Message"
                                Text="{Binding Name, Mode=TwoWay}"
                                TextChanged="Entry_TextChanged"
                                    MaxLength="15"/>
-                            <ImageButton Grid.Column="1"
+                                <ImageButton Grid.Column="1"
                                          x:Name="sendButton"
                                          HorizontalOptions="Center"
                                          VerticalOptions="Center"
@@ -144,16 +147,16 @@
                                          Command="{Binding SendPeopleCommand}"
                                          Source="{StaticResource ButtonSent}"
                                          Clicked="sendButton_Clicked">
-                                <ImageButton.Triggers>
-                                    <Trigger TargetType="ImageButton" Property="IsEnabled" Value="False">
-                                        <Setter Property="Source" Value="{StaticResource ButtonSentDisabled}" />
-                                    </Trigger>
-                                </ImageButton.Triggers>
-                            </ImageButton>
+                                    <ImageButton.Triggers>
+                                        <Trigger TargetType="ImageButton" Property="IsEnabled" Value="False">
+                                            <Setter Property="Source" Value="{StaticResource ButtonSentDisabled}" />
+                                        </Trigger>
+                                    </ImageButton.Triggers>
+                                </ImageButton>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </Frame>
-            </StackLayout>
-        </Grid>
+                    </Frame>
+                </StackLayout>
+            </Grid>
     </ContentPage.Content>
 </ContentPage>

@@ -20,20 +20,6 @@ namespace VoladoApp.ViewModels
             set => SetProperty(ref allResults, value);
         }
 
-        private bool isVisible = false;
-        public bool IsVisible
-        {
-            get => isVisible;
-            set => SetProperty(ref isVisible, value);
-        }
-
-        private bool lottieVisible = false;
-        public bool LottieVisible
-        {
-            get => lottieVisible;
-            set => SetProperty(ref lottieVisible, value);
-        }
-
         public WatchAllResultsViewModel()
         {
             AllResults = new ObservableCollection<ResultsFromDataBase>();
@@ -58,13 +44,11 @@ namespace VoladoApp.ViewModels
 
             if(AllResults.Count > 0)
             {
-                IsVisible = true;
-                LottieVisible = false;
+                MessagingCenter.Send(this, "lottie", false);
             }
             else
             {
-                IsVisible = false;
-                LottieVisible = true;
+                MessagingCenter.Send(this, "icon", true);
             }
         }
 
@@ -73,7 +57,17 @@ namespace VoladoApp.ViewModels
             var data = (ResultsFromDataBase)item;
 
             await App.Database.DeleteItemAsync(data.Result);
-            await GetResults();
+            //await GetResults();
+            AllResults.Remove(data);
+
+            if (AllResults.Count > 0)
+            {
+                MessagingCenter.Send(this, "lottie", false);
+            }
+            else
+            {
+                MessagingCenter.Send(this, "lottie", true);
+            }
         });
     }
 }

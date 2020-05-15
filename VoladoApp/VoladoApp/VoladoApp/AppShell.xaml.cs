@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace VoladoApp
 {
-    public partial class AppShell : Xamarin.Forms.Shell
+    public partial class AppShell : Shell
     {
         public AppShell()
         {
@@ -17,6 +17,7 @@ namespace VoladoApp
         private void RegisterRoutes()
         {
             Routing.RegisterRoute("login", typeof(Views.Pruebas.Login));
+            Routing.RegisterRoute("watchResults", typeof(Views.WatchAllResultsPage));
         }
     }
 }

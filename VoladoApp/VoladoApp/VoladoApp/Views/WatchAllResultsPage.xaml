@@ -10,7 +10,8 @@
              x:Class="VoladoApp.Views.WatchAllResultsPage"
              Shell.BackgroundColor="Red"
              Shell.ForegroundColor="White"
-             BackgroundColor="#e3e3e3">
+             BackgroundColor="#e3e3e3"
+             Title="Resultados">
     <ContentPage.BindingContext>
         <viewModel:WatchAllResultsViewModel/>
     </ContentPage.BindingContext>

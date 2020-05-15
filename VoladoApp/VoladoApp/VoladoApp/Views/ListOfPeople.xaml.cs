@@ -14,7 +14,6 @@ namespace VoladoApp.Views
     {
         private const int timeAnimation = 500;
         private bool touched = false;
-        private bool onlyFirstTime = true;
 
         public ListOfPeople()
         {
@@ -23,6 +22,8 @@ namespace VoladoApp.Views
             sendData.Opacity = 0;
             sendData.IsVisible = false;
             firstImage.IsVisible = true;
+
+            myEntry.Completed += MyEntry_Completed;
 
             MessagingCenter.Subscribe<ListOfPeopleViewModel, bool>(this, "lottie", async (sender, args) =>
             {
@@ -37,7 +38,6 @@ namespace VoladoApp.Views
                     await Task.WhenAny(animationLottie, animation);
                     lottie.IsVisible = false;
                     lottie.Opacity = 1;
-                    onlyFirstTime = false;
                 }
                 else
                 {
@@ -50,7 +50,6 @@ namespace VoladoApp.Views
                     await Task.WhenAny(animationLottie, animation);
                     collectionView.IsVisible = false;
                     collectionView.Opacity = 1;
-                    onlyFirstTime = false;
                 }
             });
         }
@@ -96,10 +95,11 @@ namespace VoladoApp.Views
         {
             if (!touched)
             {
+                var widht = this.Width;
                 ImageFrame.Animate("expand",
                     percent =>
                     {
-                        var change = 350 * percent;
+                        var change = (widht - 20) * percent;
                         if (change > 50)
                             ImageFrame.WidthRequest = change;
                     }, 0, 600, easing: Easing.Linear);
@@ -142,6 +142,13 @@ namespace VoladoApp.Views
         private async void ImageButton_Clicked(object sender, EventArgs e)
         {
             await HideEntry();
+        }
+
+        private async void MyEntry_Completed(object sender, EventArgs e)
+        {
+            await HideEntry();
+            var vm = BindingContext as ListOfPeopleViewModel;
+            vm.OnSendPeopleCommand();
         }
     }
 }

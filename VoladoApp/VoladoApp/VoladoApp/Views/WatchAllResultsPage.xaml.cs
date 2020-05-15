@@ -22,10 +22,10 @@ namespace VoladoApp.Views
                 if (args)
                 {
                     lottieGrid.IsVisible = true;
-                    lottie.Loop = true;
-                    lottie.Play();
+                    //lottie.Loop = true;
+                    //lottie.Play();
                     collectionView.IsVisible = false;
-                    icon.IsVisible = false;
+                    icon.IsVisible = true;
                 }
                 else
                 {
@@ -37,8 +37,9 @@ namespace VoladoApp.Views
 
             MessagingCenter.Subscribe<WatchAllResultsViewModel>(this, "icon", (sender) =>
             {
+                lottieGrid.IsVisible = true;
                 icon.IsVisible = true;
-                lottie.IsVisible = false;
+                //lottie.IsVisible = false;
                 collectionView.IsVisible = false;
             });
         }

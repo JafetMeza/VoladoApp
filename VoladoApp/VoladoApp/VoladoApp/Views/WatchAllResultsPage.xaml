@@ -133,24 +133,23 @@
                             HorizontalOptions="Start"
                             BackgroundColor="Transparent" Margin="20"/>
 
-            <Grid x:Name="lottieGrid">
-                <Grid>
+            <StackLayout x:Name="lottieGrid">
+                <!--<Grid>-->
                     <Image x:Name="icon" 
                            Source="{StaticResource sad}"
                            VerticalOptions="Start"
                            Margin="5,60"/>
-                    <lottie:AnimationView Animation="10223-search-empty.json"
+                    <!--<lottie:AnimationView Animation="10223-search-empty.json"
                                       AutoPlay="True" x:Name="lottie"
                                       Loop="True" 
                                       VerticalOptions="Start"
                                       Margin="5,20"/>
-                </Grid>
+                </Grid>-->
                 <Label Text="Ups! Parece que no hay ningun resultado."
                    HorizontalOptions="Center"
-                   VerticalOptions="Center"
                    TextColor="Black"
                    FontSize="Medium"/>
-            </Grid>
+            </StackLayout>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

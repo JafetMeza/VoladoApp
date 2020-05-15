@@ -51,7 +51,7 @@ namespace VoladoApp.ViewModels
 
         public ICommand SendPeopleCommand => new Command(() => OnSendPeopleCommand());
 
-        private void OnSendPeopleCommand()
+        public void OnSendPeopleCommand()
         {
             var person = new Person()
             {
